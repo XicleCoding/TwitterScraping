@@ -32,14 +32,15 @@ sleep(3)                                                                        
 
 #Search someting
 search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]')         #Find the xpath for search box
-search_input.send_keys('#fakenews')                                                             #Write the search text
+search_input.send_keys('futebol')                                                               #Write the search text
 search_input.send_keys(Keys.RETURN)                                                             #Press ENTER
 sleep(3)                                                                                        #Wait 3 seconds
 
 #Most recent tweets about the search
-driver.find_element_by_link_text('Principais').click()                                       #Find and click on "Mais recentes" option
+driver.find_element_by_link_text('Principais').click()                                          #Find and click on "Mais recentes" option
 sleep(3)
 
+'''
 #Check infos from a single tweet
 userTag = driver.find_element_by_xpath('//div[@data-testid="User-Names"]').text                 #Save username that posted the tweet
 print(f'username: {userTag}')
@@ -53,10 +54,28 @@ reTweet = driver.find_element_by_xpath('//div[@data-testid="retweet"]').text
 print(f'reTweets: {reTweet}')
 likes = driver.find_element_by_xpath('//div[@data-testid="reply"]').text
 print(f'likes: {likes}')
+'''
+cards = driver.find_elements_by_xpath('//article[@data-testid="tweet"]')                        #Save all tweets that page have loaded
+card = cards[0]                                                                                 #Choose the 1st tweet
 
-#card = cards[0]
+username = card.find_element_by_xpath('.//span').text                                           #Save the tweet username
+print(f'username: {username}')
 
-#print(cards[0].text)
+atUsername = card.find_element_by_xpath('.//span[contains(text(), "@")]').text                  #Save the tweet username @
+print(f'username @: {atUsername}')
 
-#username
-#card.find_element_by_xpath('./div[2]/div[1]//span').text
+timeStamp = card.find_element_by_xpath('.//time').get_attribute('datetime')                     #Save the tweet timestamp
+print(f'time: {timeStamp}')
+
+tweetText = card.find_element_by_xpath('.//div[@data-testid="tweetText"]').text                 #Save the tweet text
+print(f'tweet text: {tweetText}')
+
+reply = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                         #Save the tweet repply count
+print(f'reply: {reply}')    
+    
+reTweet = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text                     #Save the tweet retweet count
+print(f'retweets: {reTweet}')
+
+likes = card.find_element_by_xpath('.//div[@data-testid="like"]').text                          #Save the tweet likes count
+print(f'likes: {likes}')
+
