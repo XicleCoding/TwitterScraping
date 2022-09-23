@@ -92,12 +92,12 @@ def getTweetData(card):                                                         
     atUsername = card.find_element_by_xpath('.//span[contains(text(), "@")]').text 
     try:
         timeStamp = card.find_element_by_xpath('.//time').get_attribute('datetime') 
-    except NoSuchElementException:
+    except NoSuchElementException:                                                              #Advertisement dont have timestamps
         return
     tweetText = card.find_element_by_xpath('.//div[@data-testid="tweetText"]').text
-    replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text
-    reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text  
-    likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text
+    replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  #If dont have replies will be ''
+    reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              #If dont have retweets will be ''
+    likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text                   #If dont have likes will be ''
 
     return (username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
 
@@ -120,3 +120,8 @@ print(tweetData[0])
 print(tweetData[1])
 print(tweetData[2])
 
+
+
+
+#window scrolldown to load more tweets
+driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
