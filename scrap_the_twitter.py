@@ -1,3 +1,4 @@
+from asyncore import write
 import csv
 from getpass import getpass
 from lib2to3.pgen2 import driver
@@ -6,8 +7,23 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from msedge.selenium_tools import Edge, EdgeOptions
-from twitter_scraper_things import getTweetData
+#from twitter_scraper_things import getTweetData
 
+#function to extract all infos
+def getTweetData(card):                                                                         
+
+    username = card.find_element_by_xpath('.//span').text                                           
+    atUsername = card.find_element_by_xpath('.//span[contains(text(), "@")]').text 
+    try:
+        timeStamp = card.find_element_by_xpath('.//time').get_attribute('datetime') 
+    except NoSuchElementException:                                                              
+        return
+    tweetText = card.find_element_by_xpath('.//div[@data-testid="tweetText"]').text
+    replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  
+    reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
+    likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text                  
+
+    return (username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
 
 #Create instance of web driver
 options = EdgeOptions()
@@ -45,7 +61,7 @@ sleep(3)
 #Get all tweets on the page
 data = []
 tweet_ids = set()
-last_position = driver.execute_script("return.window.pageYOffset:")
+last_position = driver.execute_script("return window.pageYOffset;")
 scrolling = True
 while scrolling:
     page_cards = driver.find_elements_by_xpath('//article[@data-testid="tweet"]')
@@ -60,8 +76,8 @@ while scrolling:
     while True:                                                                                 #Preventing the slow speed of internet
         #Check the scroll position
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-        sleep(1)
-        curr_position = driver.execute_script("return.window.pageYOffset:")
+        sleep(2)
+        curr_position = driver.execute_script("return window.pageYOffset;")
         if last_position == curr_position:
             scroll_attempt += 1
             #End of scroll region
@@ -73,3 +89,12 @@ while scrolling:
         else:
             last_position = curr_position
             break
+
+print(len(data))
+
+#Saving the tweet data
+with open('futebol_tweets.csv', 'w', newline='', encoding='utf-8') as f:
+    header = {'Username', 'Handle', 'Timestamp', 'Comments', 'Likes', 'Retweets', 'Text'}
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerows(data)
