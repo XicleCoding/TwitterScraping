@@ -50,7 +50,7 @@ sleep(3)
 
 #Search term
 search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]')         
-search_input.send_keys('futebol')                                                              
+search_input.send_keys('#fakenews')                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
 
@@ -93,7 +93,7 @@ while scrolling:
 print(len(data))
 
 #Saving the tweet data
-with open('futebol_tweets.csv', 'w', newline='', encoding='utf-8') as f:
+with open('hashtag_fake_news.csv', 'w', newline='', encoding='utf-8') as f:
     header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
     #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
     writer = csv.writer(f)
