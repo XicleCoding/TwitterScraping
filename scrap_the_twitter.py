@@ -94,7 +94,8 @@ print(len(data))
 
 #Saving the tweet data
 with open('futebol_tweets.csv', 'w', newline='', encoding='utf-8') as f:
-    header = {'Username', 'Handle', 'Timestamp', 'Comments', 'Likes', 'Retweets', 'Text'}
+    header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
+    #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(data)
