@@ -4,6 +4,8 @@ from getpass import getpass
 from lib2to3.pgen2 import driver
 from optparse import Option
 from time import sleep
+import time
+import calendar
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from msedge.selenium_tools import Edge, EdgeOptions
@@ -42,7 +44,8 @@ username.send_keys(Keys.RETURN)
 sleep(3)   
 
 #Enter the password
-my_password = getpass()
+#my_password = getpass()
+my_password = 'masterthesis'
 password = driver.find_element_by_xpath('//input[@name="password"]')                            
 password.send_keys(my_password)                                                              
 password.send_keys(Keys.RETURN)                                                                 
@@ -50,7 +53,7 @@ sleep(3)
 
 #Search term
 search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]')         
-search_input.send_keys('food porn')                                                              
+search_input.send_keys('#Eleicoes2022')                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
 
@@ -93,7 +96,9 @@ while scrolling:
 print(len(data))
 
 #Saving the tweet data
-with open('food_porn.csv', 'w', newline='', encoding='utf-8') as f:
+gmt = time.gmtime()                                                                             # gmt stores current gmtime
+ts = calendar.timegm(gmt)                                                                       # ts stores timestamp
+with open(f'hashtag_Eleicoes2022_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
     header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
     #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
     writer = csv.writer(f)
