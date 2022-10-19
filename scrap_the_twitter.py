@@ -95,6 +95,8 @@ while scrolling:
 
 print(len(data))
 
+driver.close()                                                                                  #
+
 #Saving the tweet data
 gmt = time.gmtime()                                                                             # gmt stores current gmtime
 ts = calendar.timegm(gmt)                                                                       # ts stores timestamp
@@ -104,3 +106,4 @@ with open(f'hashtag_Eleicoes2022_{ts}.csv', 'w', newline='', encoding='utf-8') a
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(data)
+
