@@ -16,7 +16,8 @@ for  path, currentDirectory, files in os.walk(r"C:\Users\User\OneDrive - Univers
             #print(sum1forline(file))
             #print(f'{file.split(".")[0]}: {sum1forline(file)}')
             with open(file, 'r+', encoding='utf8') as f:
-                print(f'{file.split(".")[0]}: {len(list(csv.reader(f)))}')
+                print(f'{file.split(".")[0]}: {len(list(csv.reader(f)))-1}')
 
 
 
+#C:/Users/User/.conda/envs/scraper/python.exe "c:/Users/User/OneDrive - Universidade de Aveiro/Desktop/UA/Tese/TwitterScraping/CSVRowCounter.py"
