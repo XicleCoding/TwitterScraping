@@ -72,7 +72,7 @@ sleep(3)
 #Search term
 #search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]') 
 search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]')       
-search_input.send_keys('#Eleicoes2022')                                                              
+search_input.send_keys('Coreia do Norte')                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
 
