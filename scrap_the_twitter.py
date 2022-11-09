@@ -71,8 +71,9 @@ sleep(3)
 
 #Search term
 #search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]') 
-search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]')       
-search_input.send_keys('Coreia do Norte')                                                              
+search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]') 
+search_key = ''      
+search_input.send_keys()                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
 
@@ -121,7 +122,7 @@ driver.close()                                                                  
 #Saving the tweet data
 gmt = time.gmtime()                                                                             # gmt stores current gmtime
 ts = calendar.timegm(gmt)                                                                       # ts stores timestamp
-with open(f'hashtag_Eleicoes2022_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
+with open(f'Coreia_do_Norte_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
     header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
     #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
     writer = csv.writer(f)
