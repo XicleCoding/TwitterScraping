@@ -24,8 +24,10 @@ def countFormat(count):
         split1 = count.split('.')
         split2 = split1[1].split('K')
         finalCount = split1[0] + ',' + split2[0] + '00'
-    elif ',' in count:
-        finalCount = count
+    elif ',' in count or count == '':
+        return count
+    elif 'K' not in count:
+        return count
     else:
         split1 = count.split('K')
         finalCount = split1[0] + ',000'
@@ -50,15 +52,16 @@ def getTweetData(card):
         return
     #replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  
     replyCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
-    replyCntRaw = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
-    replyCntTest = countFormat(replyCntRaw)
-    print(replyCntTest)
+    replyCntTest = countFormat(replyCnt)
+    #print(replyCntTest)
     #reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
     reTweetCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="retweet"]').text
+    reTweetCnTest = countFormat(reTweetCnt)
     #likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text 
     likesCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text
+    likesCntTest = countFormat(likesCnt)
 
-    return (username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, likesCnt)
+    return (username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, reTweetCnTest, likesCnt, likesCntTest)
 
 #Create instance of web driver
 #options = EdgeOptions()
@@ -146,8 +149,8 @@ ts = calendar.timegm(gmt)
 search_key_list = search_key.split(' ')
 search_key_list_str = '_'.join(map(str, search_key_list))                                                                      # ts stores timestamp
 with open(f'{search_key_list_str}_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
-    header = ['Username','Handle','Timestamp','Tweet Text','Comments','TEST','Retweets','Likes']
-    #(username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, likesCnt)
+    header = ['Username','Handle','Timestamp','Tweet Text','Comments','TEST','Retweets','TEST','Likes','TEST']
+    #(username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, reTweetCnTest, likesCnt, likesCntTest)
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(data)
