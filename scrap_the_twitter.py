@@ -76,7 +76,7 @@ sleep(3)
 #search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]') 
 #search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]') #O browser passou para ENG
 search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Search query"]') #Search query
-search_key = 'Gen z'      
+search_key = 'ChatGPT'      
 search_input.send_keys(search_key)                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
