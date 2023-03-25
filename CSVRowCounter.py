@@ -12,7 +12,7 @@ def sum1forline(filename):
 CSVFilenames=[]
 for  path, currentDirectory, files in os.walk(r"C:\Users\User\OneDrive - Universidade de Aveiro\Desktop\UA\Tese\TwitterScraping"):
     for file in files:
-        if file.startswith("hashtag_Eleicoes2022_"):
+        if file.startswith("ChatGPT_"):
             #print(sum1forline(file))
             #print(f'{file.split(".")[0]}: {sum1forline(file)}')
             with open(file, 'r+', encoding='utf8') as f:
