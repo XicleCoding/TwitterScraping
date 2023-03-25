@@ -30,8 +30,11 @@ def getTweetData(card):
         timeStamp = card.find_element(by=By.XPATH, value='.//time').get_attribute('datetime') 
     except NoSuchElementException:                                                              
         return
-    #tweetText = card.find_element_by_xpath('.//div[@data-testid="tweetText"]').text
-    tweetText = card.find_element(by=By.XPATH, value='.//div[@data-testid="tweetText"]').text
+    try:
+        #tweetText = card.find_element_by_xpath('.//div[@data-testid="tweetText"]').text
+        tweetText = card.find_element(by=By.XPATH, value='.//div[@data-testid="tweetText"]').text
+    except NoSuchElementException:
+        return
     #replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  
     replyCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
     #reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
@@ -71,15 +74,17 @@ sleep(3)
 
 #Search term
 #search_input = driver.find_element_by_xpath('//input[@aria-label="Consulta de busca"]') 
-search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]') 
-search_key = ''      
-search_input.send_keys()                                                              
+#search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Consulta de busca"]') #O browser passou para ENG
+search_input = driver.find_element(by=By.XPATH, value='//input[@aria-label="Search query"]') #Search query
+search_key = 'Gen z'      
+search_input.send_keys(search_key)                                                              
 search_input.send_keys(Keys.RETURN)                                                            
 sleep(3)                                                                             
 
 #Navigate to historical 'Principais' tab
 #driver.find_element_by_link_text('Principais').click()    
-driver.find_element(by=By.LINK_TEXT, value='Principais').click()                                   
+#driver.find_element(by=By.LINK_TEXT, value='Principais').click() #O browser passou para ENG                                  
+driver.find_element(by=By.LINK_TEXT, value='Top').click() #Top                                
 sleep(3)
 
 #Get all tweets on the page
@@ -121,8 +126,10 @@ driver.close()                                                                  
 
 #Saving the tweet data
 gmt = time.gmtime()                                                                             # gmt stores current gmtime
-ts = calendar.timegm(gmt)                                                                       # ts stores timestamp
-with open(f'Coreia_do_Norte_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
+ts = calendar.timegm(gmt) 
+search_key_list = search_key.split(' ')
+search_key_list_str = '_'.join(map(str, search_key_list))                                                                      # ts stores timestamp
+with open(f'{search_key_list_str}_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
     header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
     #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
     writer = csv.writer(f)
