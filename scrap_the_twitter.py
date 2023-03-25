@@ -40,7 +40,8 @@ def getTweetData(card):
     #reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
     reTweetCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="retweet"]').text
     #likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text 
-    likesCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text         
+    likesCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text
+    print(type(likesCnt))      
 
     return (username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
 
