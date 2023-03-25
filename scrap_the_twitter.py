@@ -52,16 +52,16 @@ def getTweetData(card):
         return
     #replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  
     replyCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
-    replyCntTest = countFormat(replyCnt)
-    #print(replyCntTest)
+    replyCntFmt = countFormat(replyCnt)
+    #print(replyCntFmt)
     #reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
     reTweetCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="retweet"]').text
-    reTweetCnTest = countFormat(reTweetCnt)
+    reTweetCntFmt = countFormat(reTweetCnt)
     #likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text 
     likesCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text
-    likesCntTest = countFormat(likesCnt)
+    likesCntTestFmt = countFormat(likesCnt)
 
-    return (username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, reTweetCnTest, likesCnt, likesCntTest)
+    return (username, atUsername, timeStamp, tweetText, replyCntFmt, reTweetCntFmt, likesCntTestFmt)
 
 #Create instance of web driver
 #options = EdgeOptions()
@@ -139,7 +139,7 @@ while scrolling:
             last_position = curr_position
             break
 
-print(len(data))
+#print(len(data))
 
 driver.close()                                                                                  #
 
@@ -149,8 +149,8 @@ ts = calendar.timegm(gmt)
 search_key_list = search_key.split(' ')
 search_key_list_str = '_'.join(map(str, search_key_list))                                                                      # ts stores timestamp
 with open(f'{search_key_list_str}_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
-    header = ['Username','Handle','Timestamp','Tweet Text','Comments','TEST','Retweets','TEST','Likes','TEST']
-    #(username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, reTweetCnTest, likesCnt, likesCntTest)
+    header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
+    #(username, atUsername, timeStamp, tweetText, replyCntFmt, reTweetCntFmt, likesCntTestFmt)
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(data)
