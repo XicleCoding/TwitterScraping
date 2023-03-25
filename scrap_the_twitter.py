@@ -18,6 +18,19 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 #from twitter_scraper_things import getTweetData
 
+#function to format like, comment and reply counters
+def countFormat(count):
+    if '.' in count:
+        split1 = count.split('.')
+        split2 = split1[1].split('K')
+        finalCount = split1[0] + ',' + split2[0] + '00'
+    elif ',' in count:
+        finalCount = count
+    else:
+        split1 = count.split('K')
+        finalCount = split1[0] + ',000'
+    return finalCount
+
 #function to extract all infos
 def getTweetData(card):                                                                         
 
@@ -37,13 +50,15 @@ def getTweetData(card):
         return
     #replyCnt = card.find_element_by_xpath('.//div[@data-testid="reply"]').text                  
     replyCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
+    replyCntRaw = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
+    replyCntTest = countFormat(replyCntRaw)
+    print(replyCntTest)
     #reTweetCnt = card.find_element_by_xpath('.//div[@data-testid="retweet"]').text              
     reTweetCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="retweet"]').text
     #likesCnt = card.find_element_by_xpath('.//div[@data-testid="like"]').text 
     likesCnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text
-    print(type(likesCnt))      
 
-    return (username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
+    return (username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, likesCnt)
 
 #Create instance of web driver
 #options = EdgeOptions()
@@ -131,8 +146,8 @@ ts = calendar.timegm(gmt)
 search_key_list = search_key.split(' ')
 search_key_list_str = '_'.join(map(str, search_key_list))                                                                      # ts stores timestamp
 with open(f'{search_key_list_str}_{ts}.csv', 'w', newline='', encoding='utf-8') as f:
-    header = ['Username','Handle','Timestamp','Tweet Text','Comments','Retweets','Likes']
-    #(username, atUsername, timeStamp, tweetText, replyCnt, reTweetCnt, likesCnt)
+    header = ['Username','Handle','Timestamp','Tweet Text','Comments','TEST','Retweets','Likes']
+    #(username, atUsername, timeStamp, tweetText, replyCnt, replyCntTest, reTweetCnt, likesCnt)
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(data)
